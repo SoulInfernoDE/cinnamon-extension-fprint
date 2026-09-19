@@ -15,7 +15,7 @@ the originals back when it is switched off:
 | `performAuthentication` | resets its own state for each new attempt |
 | `_onSessionShowInfo` | classifies the reader's message, translates and colours it |
 | `_onSessionShowError` | the same for error messages |
-| `_onSessionRequest` | a password prompt: the glow goes out |
+| `_onSessionRequest` | a password prompt: the glow goes out, the button returns |
 | `_onSessionCompleted` | a success is shown green for 1.5 s before the dialog closes |
 
 Every replaced method calls the original, and every addition is guarded. This
@@ -58,6 +58,35 @@ The line under the title — "Authentication is needed to run … as the super
 user" — comes from polkit, already translated or not and with the program's
 path already filled in. There is no clean way to translate it afterwards, so
 the extension leaves it alone.
+
+## The logo in the button
+
+While the reader is in charge, the "Authenticate" button has nothing to do. It
+only ever sends the password entry's text - `_onEntryActivate()` returns at once
+when that is empty - and the dialog creates it unreactive until something is
+typed. So its label is swapped for the Mint logo, and its button face made
+transparent: a framed logo would look like something to press.
+
+The button itself stays where it is. The dialog refers to it throughout, and
+removing it would be a change to the dialog; swapping its content is not. At a
+password prompt the button gets its original label back - the very object
+Cinnamon created, kept aside while the logo was showing - and each new attempt
+starts from the button until the reader's first message arrives.
+
+The logo breathes while the reader waits - 0.09 rad every 40 ms, the login
+screen's own rhythm - and holds a steady red or green otherwise. The glow is a
+radial gradient on a disc behind the icon, the state's colour at the centre
+fading to nothing at the edge - the light the login screen draws behind the
+logo. A background is always painted; a box-shadow on a disc without one was
+not, which is why the first attempt showed no glow and so nothing to breathe.
+
+The icon is loaded by path, the way greeter-fprint loads it:
+`/usr/share/icons/hicolor/scalable/apps/linuxmint-logo-badge-symbolic.svg`, as
+a `Gio.FileIcon`, which stays tintable because the file is a `-symbolic.svg`.
+Looked up by name, Cinnamon's `St.Icon` settled on the fallback even though GTK
+finds the logo, and it has no fallback property of its own. Where the file is
+missing, `auth-fingerprint-symbolic` takes its place. Nothing of Linux Mint's is
+shipped.
 
 ## Colours
 

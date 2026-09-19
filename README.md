@@ -25,7 +25,10 @@ the states of greeter-fprint's login screen:
 
 The title glows in the state's colour, and the reader's message takes that
 colour and is translated: German is complete, other languages fall back to
-English.
+English. While the reader is in charge, the "Authenticate" button - which has
+nothing to send until a password is asked for - shows the Mint logo instead,
+glowing and breathing like the one Tux holds on the login screen; it turns back
+into the button at the password prompt.
 
 ## Requirements
 
@@ -73,4 +76,6 @@ freely, without asking and without attribution.
 
 ## License
 
-GPL-3 — see [COPYING](COPYING).
+GPL-3 — see [COPYING](COPYING). The Linux Mint logo is not in this repository:
+the extension shows the system's installed icon, and a generic fingerprint icon
+where that is missing.

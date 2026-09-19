@@ -25,7 +25,10 @@ Diese Erweiterung gibt ihm die Zustände des greeter-fprint-Anmeldebildschirms:
 
 Der Titel leuchtet in der Farbe des Zustands, und die Meldung des Lesers nimmt
 diese Farbe an und ist übersetzt: Deutsch ist vollständig, andere Sprachen
-fallen auf Englisch zurück.
+fallen auf Englisch zurück. Solange der Leser zuständig ist, zeigt der Knopf
+„Authentifizieren“ – der vor einer Passwortabfrage nichts zu senden hat –
+stattdessen das Mint-Logo, leuchtend und atmend wie das, das Tux am
+Anmeldebildschirm hält; bei der Passwortabfrage wird er wieder zum Knopf.
 
 ## Voraussetzungen
 
@@ -73,4 +76,6 @@ lizenzieren – ohne zu fragen und ohne Namensnennung.
 
 ## Lizenz
 
-GPL-3 – siehe [COPYING](COPYING).
+GPL-3 – siehe [COPYING](COPYING). Das Linux-Mint-Logo liegt nicht in diesem
+Repository: Die Erweiterung zeigt das installierte Symbol des Systems und, wo es
+fehlt, ein allgemeines Fingerabdruck-Symbol.

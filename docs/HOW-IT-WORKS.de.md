@@ -15,7 +15,7 @@ setzt beim Ausschalten die Originale wieder ein:
 | `performAuthentication` | setzt ihren eigenen Zustand für jeden neuen Versuch zurück |
 | `_onSessionShowInfo` | erkennt die Meldung des Lesers, übersetzt und färbt sie |
 | `_onSessionShowError` | dasselbe für Fehlermeldungen |
-| `_onSessionRequest` | eine Passwortabfrage: das Leuchten geht aus |
+| `_onSessionRequest` | eine Passwortabfrage: das Leuchten geht aus, der Knopf kommt zurück |
 | `_onSessionCompleted` | ein Erfolg wird 1,5 s grün gezeigt, bevor der Dialog schließt |
 
 Jede ersetzte Methode ruft das Original auf, und jede Ergänzung ist abgesichert.
@@ -59,6 +59,38 @@ Die Zeile unter dem Titel – „Authentication is needed to run … as the supe
 user“ – kommt von polkit, schon übersetzt oder eben nicht und mit bereits
 eingesetztem Programmpfad. Einen sauberen Weg, sie nachträglich zu übersetzen,
 gibt es nicht; die Erweiterung lässt sie in Ruhe.
+
+## Das Logo im Knopf
+
+Solange der Leser zuständig ist, hat der Knopf „Authentifizieren“ nichts zu tun.
+Er sendet nur den Text des Passwortfelds – `_onEntryActivate()` kehrt sofort
+zurück, wenn es leer ist –, und der Dialog legt ihn nicht anklickbar an, bis
+etwas getippt wird. Deshalb wird seine Beschriftung gegen das Mint-Logo getauscht
+und seine Knopffläche durchsichtig gemacht: Ein eingerahmtes Logo sähe aus wie
+etwas zum Drücken.
+
+Der Knopf selbst bleibt, wo er ist. Der Dialog spricht ihn überall an, und ihn zu
+entfernen, wäre eine Änderung am Dialog; seinen Inhalt zu tauschen, ist keine.
+Bei einer Passwortabfrage bekommt der Knopf seine ursprüngliche Beschriftung
+zurück – genau das Objekt, das Cinnamon angelegt hat und das beiseitegelegt wurde,
+solange das Logo zu sehen war –, und jeder neue Versuch beginnt mit dem Knopf,
+bis die erste Meldung des Lesers eintrifft.
+
+Das Logo atmet, solange der Leser wartet – 0,09 rad alle 40 ms, der Rhythmus des
+Anmeldebildschirms – und leuchtet sonst ruhig rot oder grün. Das Leuchten ist ein
+radialer Verlauf auf einer Scheibe hinter dem Symbol: in der Mitte die Farbe des
+Zustands, zum Rand hin durchsichtig – das Licht, das der Anmeldebildschirm hinter
+das Logo zeichnet. Ein Hintergrund wird immer gezeichnet; ein box-shadow auf einer
+Scheibe ohne Hintergrund wurde es nicht, weshalb der erste Versuch kein Leuchten
+zeigte und damit auch nichts, das atmen konnte.
+
+Das Symbol wird über seinen Pfad geladen, wie greeter-fprint es tut:
+`/usr/share/icons/hicolor/scalable/apps/linuxmint-logo-badge-symbolic.svg`, als
+`Gio.FileIcon`, das einfärbbar bleibt, weil die Datei ein `-symbolic.svg` ist. Über
+den Namen nachgeschlagen, landete Cinnamons `St.Icon` beim Ersatz, obwohl GTK das
+Logo findet, und eine eigene Eigenschaft für einen Ersatz hat es nicht. Fehlt die
+Datei, nimmt `auth-fingerprint-symbolic` ihren Platz ein. Von Linux Mint wird nichts
+mitgeliefert.
 
 ## Farben
 
