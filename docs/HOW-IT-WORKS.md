@@ -1,0 +1,67 @@
+# How it works
+
+***English** · [Deutsch](HOW-IT-WORKS.de.md)*
+
+## Extending the dialog at runtime
+
+Cinnamon's authentication dialog is JavaScript inside the Cinnamon process:
+`AuthenticationDialog` in `/usr/share/cinnamon/js/ui/polkitAuthenticationAgent.js`.
+Editing that file would work until the next Cinnamon update. The extension
+instead replaces five of the dialog's methods when it is switched on, and puts
+the originals back when it is switched off:
+
+| Method | What the extension adds |
+| --- | --- |
+| `performAuthentication` | resets its own state for each new attempt |
+| `_onSessionShowInfo` | classifies the reader's message, translates and colours it |
+| `_onSessionShowError` | the same for error messages |
+| `_onSessionRequest` | a password prompt: the glow goes out |
+| `_onSessionCompleted` | a success is shown green for 1.5 s before the dialog closes |
+
+Every replaced method calls the original, and every addition is guarded. This
+is an authentication dialog: a colour that fails to change is cosmetic, a dialog
+that throws is not. Errors are logged to `~/.xsession-errors`, prefixed with
+`greeter-fprint-polkit:`, and the dialog carries on as if the extension were not
+there.
+
+## Nothing here decides anything
+
+Whether authentication succeeds is settled by PAM and polkit before any of this
+runs. The extension only changes how and when the result is *shown*. When
+`_onSessionCompleted` reports success, authorisation is already granted; the
+extension shows the green and calls the original 1.5 s later. If the dialog is
+dismissed in the meantime, the original notices that it has already finished
+and does nothing.
+
+## The red holds
+
+`pam_fprintd` sends "Failed to match fingerprint" and, in the same breath, the
+next "Place your finger on the reader". Shown as they come, the red would never
+be seen. So a waiting message that arrives during the red is held back until
+the 1.5 s are over, and only then handed to the original method, unchanged.
+
+## Messages
+
+PAM messages carry no marker saying where they came from, so the reader's are
+recognised by their text. polkit's helper delivers them in English; German
+patterns are recognised too, in case a translated fprintd sends them. What is
+shown comes from greeter-fprint's translation catalogue, with English as the
+base and fallback. The classifier is the same one greeter-fprint and
+screensaver-fprint use, in its third language.
+
+After a password prompt the reader has already given up, so a success then says
+"Password accepted" rather than "Fingerprint recognised".
+
+## What stays as it is
+
+The line under the title — "Authentication is needed to run … as the super
+user" — comes from polkit, already translated or not and with the program's
+path already filled in. There is no clean way to translate it afterwards, so
+the extension leaves it alone.
+
+## Colours
+
+Taken from greeter-fprint's fingerprint panel, so the dialog, the login screen
+and the lock screen match: yellow `#ffcc1a`, red `#e63836`, green `#3db857`. The
+title keeps its white text and gains a glow, like the selected name on the login
+screen; the message takes the colour itself, like the message under Tux.

@@ -1,0 +1,7 @@
+{
+    "uuid": "greeter-fprint-polkit@soulinferno",
+    "name": "Fingerprint authentication dialog",
+    "description": "Gives Cinnamon's authentication dialog the fingerprint colours of greeter-fprint - yellow while the reader waits, red for a rejected finger, green when accepted - and translates the reader's messages.",
+    "cinnamon-version": ["6.0", "6.2", "6.4", "6.6"],
+    "url": "https://github.com/SoulInfernoDE/greeter-fprint"
+}

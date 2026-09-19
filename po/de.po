@@ -1,0 +1,19 @@
+# German translation of the greeter-fprint-polkit Cinnamon extension's metadata.
+# Copyright (C) 2026 soul-inferno <nofunction@gmx.net>
+# This file is distributed under the same license as greeter-fprint.
+msgid ""
+msgstr ""
+"Project-Id-Version: greeter-fprint-polkit\n"
+"PO-Revision-Date: 2026-09-19 17:00+0200\n"
+"Last-Translator: soul-inferno <nofunction@gmx.net>\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Fingerprint authentication dialog"
+msgstr "Fingerabdruck im Legitimierungsdialog"
+
+msgid "Gives Cinnamon's authentication dialog the fingerprint colours of greeter-fprint - yellow while the reader waits, red for a rejected finger, green when accepted - and translates the reader's messages."
+msgstr "Gibt Cinnamons Legitimierungsdialog die Fingerabdruck-Farben von greeter-fprint – gelb, solange der Leser wartet, rot bei einem abgelehnten Finger, grün bei Erfolg – und übersetzt die Meldungen des Lesers."
