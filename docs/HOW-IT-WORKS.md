@@ -94,3 +94,30 @@ Taken from greeter-fprint's fingerprint panel, so the dialog, the login screen
 and the lock screen match: yellow `#ffcc1a`, red `#e63836`, green `#3db857`. The
 title keeps its white text and gains a glow, like the selected name on the login
 screen; the message takes the colour itself, like the message under Tux.
+
+## Rendering the preview
+
+`docs/states.gif` and `docs/states.de.gif` are rendered inside the running
+Cinnamon, not filmed off the screen. `tools/render-preview.js` creates a real
+`AuthenticationDialog` - Cinnamon's own class, with the extension patching it -
+that belongs to no authentication, calls on it the methods pam_fprintd's
+messages reach, in the order of greeter-fprint's animation, and captures each
+state with Cinnamon's own screenshot function.
+
+```bash
+python3 tools/cinnamon-eval.py tools/render-preview.js __OUT__ /tmp/preview/de __LANG__ de
+python3 tools/cinnamon-eval.py tools/render-preview.js __OUT__ /tmp/preview/en __LANG__ en
+python3 tools/make-preview-gif.py /tmp/preview
+```
+
+Each run shows the dialog for about eight seconds. For English it sets
+`LC_MESSAGES` to `C` for those seconds and restores it afterwards: changing
+`LANGUAGE` alone is not picked up, because gettext caches translations until
+`setlocale()` is called. `tools/cinnamon-eval.py` passes the code as a real
+D-Bus string, because `gdbus call` reads an argument starting with "(" as
+GVariant text and hands on a mangled one.
+
+The captures are whole-monitor screenshots, so they also contain whatever was
+behind the dialog. `make-preview-gif.py` makes everything outside the dialog's
+rounded outline transparent: nothing from the screen reaches the README, and
+the animation sits cleanly on light and dark pages alike.

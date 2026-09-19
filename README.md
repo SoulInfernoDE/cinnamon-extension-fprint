@@ -10,6 +10,16 @@ A Cinnamon extension from the family of
 [greeter-fprint](https://github.com/SoulInfernoDE/greeter-fprint). Unofficial:
 not affiliated with, endorsed by, or supported by Linux Mint.
 
+![Cinnamon's authentication dialog with the extension: title and message glow
+yellow and the Mint logo breathes while the reader waits, red for a rejected
+finger, green when accepted; at the password prompt the Authenticate button is
+back](docs/states.gif)
+
+Cinnamon's own dialog with the extension, rendered inside the running Cinnamon:
+only the order of the states is scripted, each held for the duration the code
+gives it. How it is made:
+[`docs/HOW-IT-WORKS.md`](docs/HOW-IT-WORKS.md#rendering-the-preview).
+
 ## Why
 
 The stock dialog shows the reader's messages as plain text, in English, and

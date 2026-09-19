@@ -10,6 +10,16 @@ Eine Cinnamon-Erweiterung aus der Familie von
 nicht mit Linux Mint verbunden und weder von Linux Mint unterstützt noch
 empfohlen.
 
+![Cinnamons Legitimierungsdialog mit der Erweiterung: Titel und Meldung leuchten
+gelb und das Mint-Logo atmet, solange der Leser wartet, rot bei einem abgelehnten
+Finger, grün bei Erfolg; bei der Passwortabfrage ist der Knopf „Authentifizieren“
+zurück](docs/states.de.gif)
+
+Cinnamons eigener Dialog mit der Erweiterung, gerendert im laufenden Cinnamon:
+Gescriptet ist nur die Reihenfolge der Zustände, jeder hält so lange, wie der Code
+es vorgibt. Wie sie entsteht:
+[`docs/HOW-IT-WORKS.de.md`](docs/HOW-IT-WORKS.de.md#die-vorschau-rendern).
+
 ## Warum
 
 Der normale Dialog zeigt die Meldungen des Lesers als schlichten Text, auf

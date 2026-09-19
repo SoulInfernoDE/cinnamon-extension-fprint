@@ -99,3 +99,31 @@ Anmeldebildschirm und Sperrbildschirm zusammenpassen: Gelb `#ffcc1a`, Rot
 `#e63836`, Grün `#3db857`. Der Titel behält seine weiße Schrift und bekommt ein
 Leuchten, wie der gewählte Name am Anmeldebildschirm; die Meldung nimmt die
 Farbe selbst an, wie die Meldung unter Tux.
+
+## Die Vorschau rendern
+
+`docs/states.gif` und `docs/states.de.gif` werden im laufenden Cinnamon
+gerendert, nicht vom Bildschirm abgefilmt. `tools/render-preview.js` erzeugt einen
+echten `AuthenticationDialog` – Cinnamons eigene Klasse, von der Erweiterung
+ergänzt –, der zu keiner Anmeldung gehört, ruft darauf die Methoden auf, die sonst
+die Meldungen von pam_fprintd erreichen, in der Reihenfolge der
+greeter-fprint-Animation, und nimmt jeden Zustand mit Cinnamons eigener
+Screenshot-Funktion auf.
+
+```bash
+python3 tools/cinnamon-eval.py tools/render-preview.js __OUT__ /tmp/preview/de __LANG__ de
+python3 tools/cinnamon-eval.py tools/render-preview.js __OUT__ /tmp/preview/en __LANG__ en
+python3 tools/make-preview-gif.py /tmp/preview
+```
+
+Jeder Lauf zeigt den Dialog etwa acht Sekunden lang. Für Englisch stellt er für
+diese Sekunden `LC_MESSAGES` auf `C` und danach zurück: Nur `LANGUAGE` zu ändern,
+greift nicht, weil gettext Übersetzungen zwischenspeichert, bis `setlocale()`
+aufgerufen wird. `tools/cinnamon-eval.py` übergibt den Code als echten
+D-Bus-String, weil `gdbus call` ein Argument, das mit „(“ beginnt, als GVariant-Text
+liest und verstümmelt weitergibt.
+
+Die Aufnahmen sind Bildschirmfotos des ganzen Monitors und enthalten deshalb auch,
+was hinter dem Dialog lag. `make-preview-gif.py` macht alles außerhalb der
+abgerundeten Form des Dialogs durchsichtig: Nichts vom Bildschirm gelangt in die
+README, und die Animation sitzt auf hellen wie dunklen Seiten sauber.
