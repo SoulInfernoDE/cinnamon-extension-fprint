@@ -29,8 +29,8 @@ msgstr "Lautstärke der Fingerabdruck-Töne"
 msgid "fingerprint, reader, sound, volume"
 msgstr "Fingerabdruck, Leser, Ton, Klang, Lautstärke"
 
-msgid "On the lock screen, for sudo and pkexec in a terminal, and in authentication dialogs. At 0 % they are silent."
-msgstr "Im Sperrbildschirm, für sudo und pkexec im Terminal und in Legitimierungsdialogen. Bei 0 % sind sie stumm."
+msgid "At the login screen, on the lock screen, for sudo and pkexec in a terminal, and in authentication dialogs. At 0 % they are silent."
+msgstr "Am Anmeldebildschirm, im Sperrbildschirm, für sudo und pkexec im Terminal und in Legitimierungsdialogen. Bei 0 % sind sie stumm."
 
 msgid "Volume"
 msgstr "Lautstärke"

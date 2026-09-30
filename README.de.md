@@ -42,10 +42,14 @@ Anmeldebildschirm hält; bei der Passwortabfrage wird er wieder zum Knopf.
 
 Außerdem ergänzt sie im Lautstärke-Applet der Leiste, direkt unter dem
 Lautstärkeregler, einen Regler **Fingerabdruck-Töne**: wie laut die
-Fingerabdruck-Töne von greeter-fprint im Sperrbildschirm, im Terminal und in
-Legitimierungsdialogen sind. Beim Loslassen erklingt eine Probe in der neuen
+Fingerabdruck-Töne von greeter-fprint am Anmeldebildschirm, im
+Sperrbildschirm, im Terminal und in Legitimierungsdialogen sind. Beim Loslassen erklingt eine Probe in der neuen
 Lautstärke. Dieselbe Einstellung hat eine eigene Seite unter
 **Systemeinstellungen → Fingerabdruck-Töne**, bei Hardware neben „Klang“.
+
+![Der Lautstärkeregler des Applets mit dem Fingerabdruck-Regler darunter und die
+Seite „Fingerabdruck-Töne“ der Systemeinstellungen, beide gemeinsam von 100 % auf
+30 %](docs/volume.de.gif)
 
 ## Voraussetzungen
 

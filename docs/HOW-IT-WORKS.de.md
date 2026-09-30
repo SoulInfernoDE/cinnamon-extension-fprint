@@ -99,8 +99,8 @@ mitgeliefert.
 `soundSlider.js` ergänzt im Lautstärke-Applet von Cinnamon direkt unter dessen
 Lautstärkeregler einen Regler **Fingerabdruck-Töne**. Er liest und schreibt
 `io.github.soulinfernode.fprint-sounds volume`, die Einstellung, die
-greeter-fprint installiert und in deren Lautstärke dessen Töne für die Sitzung
-und der Sperrbildschirm von screensaver-fprint spielen. Änderungen von anderswo –
+greeter-fprint installiert und in deren Lautstärke dessen Töne für die Sitzung,
+sein Anmeldebildschirm und der Sperrbildschirm von screensaver-fprint spielen. Änderungen von anderswo –
 das Applet einer anderen Leiste, dconf – bewegen ihn mit.
 
 Das Applet wird erweitert wie der Dialog: `_showFixedElements()` baut sein Menü,
@@ -176,3 +176,21 @@ Die Aufnahmen sind Bildschirmfotos des ganzen Monitors und enthalten deshalb auc
 was hinter dem Dialog lag. `make-preview-gif.py` macht alles außerhalb der
 abgerundeten Form des Dialogs durchsichtig: Nichts vom Bildschirm gelangt in die
 README, und die Animation sitzt auf hellen wie dunklen Seiten sauber.
+
+Die Vorschau zur Lautstärke, `docs/volume.gif` und `docs/volume.de.gif`, wird
+dagegen vom laufenden Desktop aufgenommen, weil sie zwei Dinge nebeneinander zeigt,
+die kein einzelnes Fenster enthält:
+
+```bash
+python3 tools/capture-volume.py /tmp/volume
+python3 tools/make-volume-gif.py /tmp/volume
+```
+
+`capture-volume.py` setzt die echte Lautstärke der Fingerabdruck-Töne nacheinander
+auf jeden Wert, damit sich beide Regler gemeinsam bewegen, und stellt am Ende den
+ursprünglichen Wert wieder her. Es öffnet die Einstellungsseite einmal pro Sprache
+und das Menü des Applets einmal pro Wert und nimmt beides mit Cinnamons
+Screenshot-Funktion auf. Die Regler des Applets tragen keinen Text; ein Satz davon
+dient beiden Sprachen. Das Menü wird vor der ersten Aufnahme einmal geöffnet: Beim
+ersten Öffnen hatte es sich noch nicht gesetzt, und seine Zeilen lagen 11 px tiefer
+als bei jedem späteren.

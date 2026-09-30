@@ -42,9 +42,14 @@ into the button at the password prompt.
 
 It also adds a **Fingerprint sounds** slider to the sound applet on the panel,
 right below the volume slider: how loud greeter-fprint's fingerprint sounds are
-on the lock screen, in terminals and in authentication dialogs. Letting go of it
+at the login screen, on the lock screen, in terminals and in authentication
+dialogs. Letting go of it
 plays a sample at the new level. The same setting has a page of its own in
 **System Settings → Fingerprint sounds**, under Hardware next to Sound.
+
+![The sound applet's volume slider with the fingerprint slider below it, and the
+Fingerprint sounds page of System Settings, both moving together from 100 % down
+to 30 %](docs/volume.gif)
 
 ## Requirements
 

@@ -95,7 +95,8 @@ shipped.
 `soundSlider.js` adds a **Fingerprint sounds** slider to Cinnamon's sound
 applet, right below its volume slider. It reads and writes
 `io.github.soulinfernode.fprint-sounds volume`, the setting greeter-fprint
-installs and its session sounds and screensaver-fprint's lock screen play at.
+installs and its session sounds, its login screen and screensaver-fprint's lock
+screen play at.
 Changes made elsewhere - another panel's applet, dconf - move it too.
 
 The applet is extended like the dialog: `_showFixedElements()` builds its menu,
@@ -167,3 +168,20 @@ The captures are whole-monitor screenshots, so they also contain whatever was
 behind the dialog. `make-preview-gif.py` makes everything outside the dialog's
 rounded outline transparent: nothing from the screen reaches the README, and
 the animation sits cleanly on light and dark pages alike.
+
+The volume preview, `docs/volume.gif` and `docs/volume.de.gif`, is captured from
+the running desktop instead, because it shows two things side by side that no
+single window contains:
+
+```bash
+python3 tools/capture-volume.py /tmp/volume
+python3 tools/make-volume-gif.py /tmp/volume
+```
+
+`capture-volume.py` sets the real fingerprint volume to each value in turn, so
+that both controls move together, and restores the original at the end. It
+opens the settings page once per language and the applet's menu once per value,
+and captures both with Cinnamon's screenshot function. The applet's sliders
+carry no text, so one set serves both languages. The menu is opened once before
+the first capture: on its first open it had not settled, and its rows came out
+11 px lower than on every later open.

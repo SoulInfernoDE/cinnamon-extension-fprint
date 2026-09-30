@@ -110,7 +110,7 @@ class Module:
 
         section = page.add_section(
             _f("Fingerprint sounds"),
-            _f("On the lock screen, for sudo and pkexec in a terminal, and in authentication dialogs. At 0 % they are silent."))
+            _f("At the login screen, on the lock screen, for sudo and pkexec in a terminal, and in authentication dialogs. At 0 % they are silent."))
 
         volume = GSettingsRange(_f("Volume"), SCHEMA, "volume", _f("Quiet"), _f("Loud"),
                                 show_value=True, units="%")
