@@ -1,1 +1,3 @@
-# metadata.json is not extractable by xgettext; de.po is maintained by hand.
+# metadata.json is not extractable by xgettext; its two strings are kept in de.po by hand.
+greeter-fprint-polkit@soulinferno/soundSlider.js
+cinnamon-settings/cs_fprint_sounds.py

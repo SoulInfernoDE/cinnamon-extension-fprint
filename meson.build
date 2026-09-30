@@ -10,8 +10,16 @@ install_data(
         extension_uuid / 'metadata.json',
         extension_uuid / 'extension.js',
         extension_uuid / 'greeterFprintMessages.js',
+        extension_uuid / 'soundSlider.js',
     ],
     install_dir: datadir / 'cinnamon' / 'extensions' / extension_uuid,
+)
+
+# The "Fingerprint sounds" page in System Settings. cinnamon-settings loads
+# every cs_*.py in this directory; this adds a file, it replaces none.
+install_data(
+    'cinnamon-settings' / 'cs_fprint_sounds.py',
+    install_dir: datadir / 'cinnamon' / 'cinnamon-settings' / 'modules',
 )
 
 # Cinnamon translates an extension's name and description with the uuid as the

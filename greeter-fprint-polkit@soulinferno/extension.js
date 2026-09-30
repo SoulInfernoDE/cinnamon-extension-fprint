@@ -22,6 +22,7 @@ const St = imports.gi.St;
 const PolkitAgent = imports.ui.polkitAuthenticationAgent;
 
 let Messages = null;
+let SoundSlider = null;
 let originals = null;
 
 // greeter-fprint's own values: FingerprintPanel.FLASH_MS, and the colours of
@@ -225,6 +226,14 @@ function restyle(dialog, text, label) {
 }
 
 function enable() {
+    // The sound applet's slider is independent of the dialog: whatever happens
+    // to one must not stop the other.
+    try {
+        SoundSlider.enable();
+    } catch (e) {
+        report("SoundSlider.enable", e);
+    }
+
     const proto = PolkitAgent.AuthenticationDialog.prototype;
     originals = {
         performAuthentication: proto.performAuthentication,
@@ -337,6 +346,11 @@ function enable() {
 }
 
 function disable() {
+    try {
+        SoundSlider.disable();
+    } catch (e) {
+        report("SoundSlider.disable", e);
+    }
     if (!originals)
         return;
     const proto = PolkitAgent.AuthenticationDialog.prototype;
@@ -346,6 +360,11 @@ function disable() {
 }
 
 function init(meta) {
-    imports.searchPath.unshift(meta.path);
-    Messages = imports.greeterFprintMessages;
+    // require() is Cinnamon's own loader for an xlet's files: it keeps them by
+    // path and size and loads a changed file afresh on reload. The global
+    // imports.searchPath used here before cached the first version for the
+    // whole session, so an updated soundSlider.js stayed invisible until
+    // Cinnamon restarted.
+    Messages = require("./greeterFprintMessages");
+    SoundSlider = require("./soundSlider");
 }

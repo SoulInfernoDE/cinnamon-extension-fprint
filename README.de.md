@@ -40,12 +40,21 @@ fallen auf Englisch zurück. Solange der Leser zuständig ist, zeigt der Knopf
 stattdessen das Mint-Logo, leuchtend und atmend wie das, das Tux am
 Anmeldebildschirm hält; bei der Passwortabfrage wird er wieder zum Knopf.
 
+Außerdem ergänzt sie im Lautstärke-Applet der Leiste, direkt unter dem
+Lautstärkeregler, einen Regler **Fingerabdruck-Töne**: wie laut die
+Fingerabdruck-Töne von greeter-fprint im Sperrbildschirm, im Terminal und in
+Legitimierungsdialogen sind. Beim Loslassen erklingt eine Probe in der neuen
+Lautstärke. Dieselbe Einstellung hat eine eigene Seite unter
+**Systemeinstellungen → Fingerabdruck-Töne**, bei Hardware neben „Klang“.
+
 ## Voraussetzungen
 
 - Cinnamon 6.x
 - [greeter-fprint](https://github.com/SoulInfernoDE/greeter-fprint) installiert –
   die Meldungen kommen aus seinem Übersetzungskatalog; ohne ihn erscheinen sie
-  auf Englisch. Seine Töne für die Sitzung spielen auch bei diesem Dialog.
+  auf Englisch. Seine Töne für die Sitzung spielen auch bei diesem Dialog, und
+  es installiert die Einstellung, die der Lautstärkeregler ändert; ohne es gibt
+  es keinen Regler.
 
 ## Installation
 
@@ -58,11 +67,13 @@ sudo ninja -C build install
 ```
 
 Danach unter **Systemeinstellungen → Erweiterungen** als „Fingerabdruck im
-Legitimierungsdialog“ einschalten.
+Legitimierungsdialog“ einschalten. Die Seite „Fingerabdruck-Töne“ muss nicht
+eingeschaltet werden; sie ist nach der Installation da.
 
 Ohne root: `greeter-fprint-polkit@soulinferno/` nach
 `~/.local/share/cinnamon/extensions/` kopieren; nur ihr Name in der Liste der
-Erweiterungen bleibt dann englisch.
+Erweiterungen bleibt dann englisch, und die Seite in den Systemeinstellungen
+fehlt – cinnamon-settings sucht nur in seinem eigenen Verzeichnis.
 
 ## Wie es funktioniert
 

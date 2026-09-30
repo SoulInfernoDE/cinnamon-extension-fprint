@@ -18,6 +18,8 @@ setzt beim Ausschalten die Originale wieder ein:
 | `_onSessionRequest` | eine Passwortabfrage: das Leuchten geht aus, der Knopf kommt zurück |
 | `_onSessionCompleted` | ein Erfolg wird 1,5 s grün gezeigt, bevor der Dialog schließt |
 
+Auch das Lautstärke-Applet bekommt einen Regler; siehe [unten](#der-lautstärkeregler).
+
 Jede ersetzte Methode ruft das Original auf, und jede Ergänzung ist abgesichert.
 Das ist ein Anmeldedialog: Eine Farbe, die sich nicht ändert, ist ein
 Schönheitsfehler, ein Dialog, der abstürzt, nicht. Fehler landen in
@@ -91,6 +93,53 @@ den Namen nachgeschlagen, landete Cinnamons `St.Icon` beim Ersatz, obwohl GTK da
 Logo findet, und eine eigene Eigenschaft für einen Ersatz hat es nicht. Fehlt die
 Datei, nimmt `auth-fingerprint-symbolic` ihren Platz ein. Von Linux Mint wird nichts
 mitgeliefert.
+
+## Der Lautstärkeregler
+
+`soundSlider.js` ergänzt im Lautstärke-Applet von Cinnamon direkt unter dessen
+Lautstärkeregler einen Regler **Fingerabdruck-Töne**. Er liest und schreibt
+`io.github.soulinfernode.fprint-sounds volume`, die Einstellung, die
+greeter-fprint installiert und in deren Lautstärke dessen Töne für die Sitzung
+und der Sperrbildschirm von screensaver-fprint spielen. Änderungen von anderswo –
+das Applet einer anderen Leiste, dconf – bewegen ihn mit.
+
+Das Applet wird erweitert wie der Dialog: `_showFixedElements()` baut sein Menü,
+also wird die Methode am Prototyp des Applets umhüllt, und jedes Menü, das es
+baut, bekommt den Regler – auch das von später erzeugten Instanzen. Bereits
+laufende Instanzen bekommen ihn direkt, und `disable()` nimmt beides zurück. Sind
+die Applets der Leiste beim Start der Erweiterung noch nicht da, sieht sie alle
+2 s erneut nach, bis zu 15-mal.
+
+Beim Loslassen des Reglers erklingt der Erfolgston in der neuen Lautstärke, mit
+derselben Medienrolle und Umrechnung wie die echten Töne – was du hörst, klingt
+also wie eine echte Abfrage. Scrollen beendet bei jedem Schritt ein „Ziehen“; die
+Probe wartet deshalb, bis der Wert 250 ms stillsteht.
+
+GLib liest die kompilierte Schema-Datenbank einmal beim Start eines Prozesses,
+und Cinnamon läuft die ganze Sitzung: Ein Schema, das nach der Anmeldung
+installiert wurde, bleibt für Cinnamon bis zu einem Neustart unsichtbar. Kennt die
+Standardquelle das Schema nicht, wird die installierte Datenbank deshalb neu
+gelesen – der Regler erscheint gleich nach der Installation, ohne Neustart. Die
+Einstellung läuft trotzdem über das gewöhnliche dconf-Backend, das alle anderen
+Prozesse teilen.
+
+Ist das Schema von greeter-fprint nicht installiert, gibt es nichts einzustellen,
+und kein Regler erscheint; die Farben des Dialogs funktionieren trotzdem.
+
+## Die Seite in den Systemeinstellungen
+
+`cs_fprint_sounds.py` ergänzt die Systemeinstellungen um **Fingerabdruck-Töne**,
+bei Hardware neben „Klang“: dieselbe Lautstärke, mit einem Knopf „Testklang“.
+Direkt öffnen lässt sie sich mit `cinnamon-settings fprint_sounds`.
+
+cinnamon-settings lädt jede `cs_*.py` in seinem Modulverzeichnis; die Seite ist
+dort also eine eigene Datei – an Cinnamon wird nichts geändert, und ein
+Cinnamon-Update entfernt sie nicht, weil ein Paket nur seine eigenen Dateien
+ersetzt. Eine eigene Seite statt einer Zeile auf der Klang-Seite ist Absicht: Die
+Klang-Seite ist `cs_sound.py`, und `cinnamon-settings sound` – das, was „Sound
+Settings“ im Applet öffnet – lädt kein anderes Modul; eine Zeile dort hätte
+bedeutet, Cinnamons Datei zu ersetzen. Ohne das Schema von greeter-fprint
+erscheint die Seite nicht.
 
 ## Farben
 

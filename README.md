@@ -40,12 +40,19 @@ nothing to send until a password is asked for - shows the Mint logo instead,
 glowing and breathing like the one Tux holds on the login screen; it turns back
 into the button at the password prompt.
 
+It also adds a **Fingerprint sounds** slider to the sound applet on the panel,
+right below the volume slider: how loud greeter-fprint's fingerprint sounds are
+on the lock screen, in terminals and in authentication dialogs. Letting go of it
+plays a sample at the new level. The same setting has a page of its own in
+**System Settings → Fingerprint sounds**, under Hardware next to Sound.
+
 ## Requirements
 
 - Cinnamon 6.x
 - [greeter-fprint](https://github.com/SoulInfernoDE/greeter-fprint) installed —
   the messages come from its translation catalogue; without it they appear in
-  English. Its session sounds also play for this dialog.
+  English. Its session sounds also play for this dialog, and it installs the
+  setting the sound slider changes; without it there is no slider.
 
 ## Install
 
@@ -58,11 +65,13 @@ sudo ninja -C build install
 ```
 
 Then switch it on under **System Settings → Extensions** as "Fingerprint
-authentication dialog".
+authentication dialog". The Fingerprint sounds page needs no switching on; it
+appears once installed.
 
 Without root, copy `greeter-fprint-polkit@soulinferno/` to
 `~/.local/share/cinnamon/extensions/`; only its name in the Extensions list
-then stays English.
+then stays English, and the System Settings page is missing - cinnamon-settings
+only looks in its own directory.
 
 ## How it works
 

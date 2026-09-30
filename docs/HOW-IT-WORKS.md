@@ -18,6 +18,8 @@ the originals back when it is switched off:
 | `_onSessionRequest` | a password prompt: the glow goes out, the button returns |
 | `_onSessionCompleted` | a success is shown green for 1.5 s before the dialog closes |
 
+The sound applet gets a slider as well; see [below](#the-sound-slider).
+
 Every replaced method calls the original, and every addition is guarded. This
 is an authentication dialog: a colour that fails to change is cosmetic, a dialog
 that throws is not. Errors are logged to `~/.xsession-errors`, prefixed with
@@ -87,6 +89,50 @@ Looked up by name, Cinnamon's `St.Icon` settled on the fallback even though GTK
 finds the logo, and it has no fallback property of its own. Where the file is
 missing, `auth-fingerprint-symbolic` takes its place. Nothing of Linux Mint's is
 shipped.
+
+## The sound slider
+
+`soundSlider.js` adds a **Fingerprint sounds** slider to Cinnamon's sound
+applet, right below its volume slider. It reads and writes
+`io.github.soulinfernode.fprint-sounds volume`, the setting greeter-fprint
+installs and its session sounds and screensaver-fprint's lock screen play at.
+Changes made elsewhere - another panel's applet, dconf - move it too.
+
+The applet is extended like the dialog: `_showFixedElements()` builds its menu,
+so it is wrapped on the applet's prototype, and every menu it builds gets the
+slider - instances created later included. Instances already running get theirs
+directly, and `disable()` removes both. If the panel's applets are not up yet
+when the extension starts, it looks again every 2 s, up to 15 times.
+
+Letting go of the slider plays the success sound at the new level, with the
+same media role and conversion the real sounds use, so what you hear is what a
+prompt will sound like. Scrolling ends a "drag" at every step, so the sample
+waits until the value has been still for 250 ms.
+
+GLib reads the compiled schema database once, when a process starts, and
+Cinnamon runs for the whole session: a schema installed after login is
+invisible to it until Cinnamon restarts. So when the default source does not
+know the schema, the installed database is read afresh - the slider appears
+right after installing, without a restart. The setting still goes through the
+ordinary dconf backend, shared with every other process.
+
+Without greeter-fprint's schema installed there is nothing to set, and no
+slider appears; the dialog's colours work regardless.
+
+## The settings page
+
+`cs_fprint_sounds.py` adds **Fingerprint sounds** to System Settings, under
+Hardware next to Sound: the same volume, with a "Test sound" button. Open it
+directly with `cinnamon-settings fprint_sounds`.
+
+cinnamon-settings loads every `cs_*.py` in its modules directory, so the page is
+a file of its own there - nothing of Cinnamon's is changed, and a Cinnamon
+update does not remove it, because a package only replaces its own files. It is
+a page of its own rather than a row on the Sound page on purpose: the Sound page
+is `cs_sound.py`, and `cinnamon-settings sound` - what the applet's "Sound
+Settings" opens - imports no other module, so a row there would have meant
+replacing Cinnamon's file. Without greeter-fprint's schema the page does not
+appear.
 
 ## Colours
 

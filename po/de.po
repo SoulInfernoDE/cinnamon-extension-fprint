@@ -15,5 +15,35 @@ msgstr ""
 msgid "Fingerprint authentication dialog"
 msgstr "Fingerabdruck im Legitimierungsdialog"
 
-msgid "Gives Cinnamon's authentication dialog the fingerprint colours of greeter-fprint - yellow while the reader waits, red for a rejected finger, green when accepted - and translates the reader's messages."
-msgstr "Gibt Cinnamons Legitimierungsdialog die Fingerabdruck-Farben von greeter-fprint – gelb, solange der Leser wartet, rot bei einem abgelehnten Finger, grün bei Erfolg – und übersetzt die Meldungen des Lesers."
+msgid "Gives Cinnamon's authentication dialog the fingerprint colours of greeter-fprint - yellow while the reader waits, red for a rejected finger, green when accepted - and translates the reader's messages. Adds a slider for the fingerprint sounds' volume to the sound applet."
+msgstr "Gibt Cinnamons Legitimierungsdialog die Fingerabdruck-Farben von greeter-fprint – gelb, solange der Leser wartet, rot bei einem abgelehnten Finger, grün bei Erfolg – und übersetzt die Meldungen des Lesers. Ergänzt im Lautstärke-Applet einen Regler für die Lautstärke der Fingerabdruck-Töne."
+
+# Label of the slider in the sound applet (soundSlider.js)
+msgid "Fingerprint sounds"
+msgstr "Fingerabdruck-Töne"
+
+# The "Fingerprint sounds" page in System Settings (cs_fprint_sounds.py)
+msgid "Volume of the fingerprint sounds"
+msgstr "Lautstärke der Fingerabdruck-Töne"
+
+msgid "fingerprint, reader, sound, volume"
+msgstr "Fingerabdruck, Leser, Ton, Klang, Lautstärke"
+
+msgid "On the lock screen, for sudo and pkexec in a terminal, and in authentication dialogs. At 0 % they are silent."
+msgstr "Im Sperrbildschirm, für sudo und pkexec im Terminal und in Legitimierungsdialogen. Bei 0 % sind sie stumm."
+
+msgid "Volume"
+msgstr "Lautstärke"
+
+msgid "Quiet"
+msgstr "Leise"
+
+msgid "Loud"
+msgstr "Laut"
+
+msgid "Play a sample at this volume"
+msgstr "Eine Probe in dieser Lautstärke abspielen"
+
+msgid "Test sound"
+msgstr "Testklang"
+
